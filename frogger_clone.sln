@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "frogger_clone", "frogger_clone.pyproj", "{5ECD4A9E-A3F9-4783-BC0A-0101FD23F515}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "scifi_invaders", "scifi_invaders.pyproj", "{5ECD4A9E-A3F9-4783-BC0A-0101FD23F515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

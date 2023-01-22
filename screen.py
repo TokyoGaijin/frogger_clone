@@ -26,5 +26,6 @@ class Screen(object):
 
 
     def screen_update(self):
+        self.CLOCK.tick(self.FPS)
         pygame.display.update()
         self.WINDOW.fill(self.BG_COLOR)

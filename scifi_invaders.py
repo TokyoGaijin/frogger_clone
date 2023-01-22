@@ -3,7 +3,7 @@ import keyboard
 import pyautogui
 import colorswatch as cs
 import screen
-import frog
+
 
 pygame.init()
 
@@ -16,7 +16,7 @@ WINDOW = game_screen.WINDOW
 
 
 # Game Objects
-player_frog = frog.Frog(WINDOW, 300, 500)
+
 
 
 def update():
@@ -24,8 +24,9 @@ def update():
 
 
 
+
 def draw():
-    player_frog.draw()
+    pass
 
 
 
