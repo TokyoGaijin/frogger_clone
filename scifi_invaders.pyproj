@@ -5,7 +5,7 @@
     <ProjectGuid>5ecd4a9e-a3f9-4783-bc0a-0101fd23f515</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>frogger_clone.py</StartupFile>
+    <StartupFile>scifi_invaders.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,8 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="bullet.py" />
     <Compile Include="frog.py" />
-    <Compile Include="frogger_clone.py" />
+    <Compile Include="player_tank.py" />
+    <Compile Include="scifi_invaders.py" />
     <Compile Include="screen.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -3,12 +3,14 @@ import keyboard
 import pyautogui
 import colorswatch as cs
 import screen
+import player_tank
+import bullet
 
 
 pygame.init()
 
 game_screen = screen.Screen(600, 800, 60, bg_color = cs.black["pygame"], caption = "Frogger Clone (Working Title)")
-game_size = (400, 600)
+game_size = (600, 600)
 board_coords = (0, 200)
 
 # Easy to reference surface declaration
@@ -16,17 +18,17 @@ WINDOW = game_screen.WINDOW
 
 
 # Game Objects
-
+player = player_tank.Player(WINDOW, 300, 700)
 
 
 def update():
     game_screen.screen_update()
+    player.update()
 
 
-
-
+    
 def draw():
-    pass
+    player.draw()
 
 
 
