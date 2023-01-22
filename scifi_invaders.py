@@ -26,11 +26,12 @@ building_3 = building.Building(WINDOW, 465, 480)
 
 city = [building_1, building_2, building_3]
 
+
+
 def collide_building():
     for buildings in city:
         for pixels in buildings.main_building:
             for bullet in player.magazine:
-                #if bullet.bulletRect.top <= pixels.pixelRect.bottom:
                 if bullet.bulletRect.colliderect(pixels.pixelRect):
                     player.magazine.remove(bullet)
                     buildings.main_building.remove(pixels)

@@ -24,7 +24,7 @@ class Building(object):
                                  "0000000001-"]
         
         self.main_color = cs.gray["pygame"]
-        self.shade_color = cs.dark_gray["pygame"]
+        self.shade_color = cs.night_gray["pygame"]
         self.lights = cs.yellow["pygame"]
         self.main_building = []
         self.pixel = pygame.Rect(self.posX, self.posY, 10, 10)

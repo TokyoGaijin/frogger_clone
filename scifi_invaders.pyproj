@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="building.py" />
     <Compile Include="bullet.py" />
+    <Compile Include="enemy.py" />
     <Compile Include="frog.py" />
     <Compile Include="pixel.py" />
     <Compile Include="player_tank.py" />
