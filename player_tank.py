@@ -2,7 +2,7 @@ import pygame
 import keyboard
 import colorswatch as cs
 import bullet
-import pixel
+
 
 class Player(object):
     def __init__(self, surface, posX, posY):
@@ -54,8 +54,7 @@ class Player(object):
             self.player_rect.x = self.right_limit
             self.player_gun.x = self.player_rect.x + 23
         
-
-        
+       
 
 
         # eliminate bullet if it goes off screen
