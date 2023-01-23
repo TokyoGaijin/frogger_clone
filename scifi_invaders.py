@@ -6,6 +6,7 @@ import screen
 import player_tank
 import bullet
 import building
+import enemy
 
 
 pygame.init()
@@ -21,10 +22,13 @@ WINDOW = game_screen.WINDOW
 # Game Objects
 player = player_tank.Player(WINDOW, 300, 700)
 building_1 = building.Building(WINDOW, 25, 480)
-building_2 = building.Building(WINDOW, 250, 480)
-building_3 = building.Building(WINDOW, 465, 480)
+building_2 = building.Building(WINDOW, 200, 480)
+building_3 = building.Building(WINDOW, 375, 480)
+building_4 = building.Building(WINDOW, 525, 480)
 
-city = [building_1, building_2, building_3]
+city = [building_1, building_2, building_3, building_4]
+
+test_enemy = enemy.Enemy(WINDOW, 30, 100)
 
 
 
@@ -45,17 +49,22 @@ def update():
         building.update()
     collide_building()
 
+    test_enemy.update()
+
 
     
 def draw():
     player.draw()
     for building in city:
         building.draw()
+    test_enemy.draw()
 
 
 def main_game():
     for building in city:
         building.build_building()
+
+    test_enemy.build_enemy()
 
     while game_screen.inPlay:
 

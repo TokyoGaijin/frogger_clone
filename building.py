@@ -4,6 +4,7 @@ import pixel
 
 class Building(object):
     def __init__(self, surface, posX, posY):
+
         self.surface = surface
         self.posX = posX
         self.posY = posY
@@ -21,35 +22,33 @@ class Building(object):
                                  "0OO00OO0011",
                                  "0OO00OO0011",
                                  "00000000011",
-                                 "0000000001-"]
+                                 "00000000011"]
         
         self.main_color = cs.gray["pygame"]
         self.shade_color = cs.night_gray["pygame"]
         self.lights = cs.yellow["pygame"]
         self.main_building = []
-        self.pixel = pygame.Rect(self.posX, self.posY, 10, 10)
-        self.main_pixel = self.pixel
 
         # Build the building itself
         self.startX = self.posX
 
 
     def build_building(self):
-        pixel_size = 10
+        pixel_width = 5
 
         
         for row in self.building_pattern:
             for col in row:
                 if col == "0":
-                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.main_color))
+                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.main_color, pixel_size = pixel_width))
                 if col == "1":
-                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.shade_color))
+                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.shade_color, pixel_size = pixel_width))
                 if col == "O":
-                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.lights))
+                    self.main_building.append(pixel.Pixel(self.surface, self.posX, self.posY, color = self.lights, pixel_size = pixel_width))
 
-                self.posX += pixel_size
+                self.posX += pixel_width
 
-            self.posY += pixel_size
+            self.posY += pixel_width
             self.posX = self.startX
 
 
