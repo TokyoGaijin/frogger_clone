@@ -1,17 +1,8 @@
 import pygame
 import colorswatch as cs
-from enum import Enum
 import pixel
 import random
 
-
-class LifeState(Enum):
-    ALIVE = 0
-    DEAD = 1
-
-class MoveState(Enum):
-    LEFT = 0
-    RIGHT = 1
 
 
 
@@ -21,10 +12,9 @@ class Enemy(object):
         self.posX = posX
         self.posY = posY
         self.enemy_type = enemy_type
-        self.life_state = LifeState.ALIVE
         self.life_color = cs.white["pygame"]
         self.ashes = cs.night_gray["pygame"]
-        self.move_state = MoveState.LEFT
+        self.move_direction = "left"
         self.speed = 2
         self.clock = pygame.time.Clock()
         self.isAlive = True
@@ -79,7 +69,7 @@ class Enemy(object):
 
     def build_enemy(self):
         
-        if self.life_state == LifeState.ALIVE:
+        if self.isAlive:
             if self.enemy_type == "taito_0":
                 self.enemy_pattern = self.taito_0
             elif self.enemy_type == "taito_1":
@@ -110,26 +100,26 @@ class Enemy(object):
 
     def update(self):
         if self.isAlive:
-            for pixel in self.enemy_icon:
-                if self.move_state == MoveState.LEFT:
+            leftmost_x = min([pixel.pixelRect.x for pixel in self.enemy_icon])
+            rightmost_x = max([pixel.pixelRect.x for pixel in self.enemy_icon])
+
+            if self.move_direction == "left":
+                for pixel in self.enemy_icon:
                     pixel.pixelRect.x -= self.speed
-                    self.boundingBox.x -= self.speed
-                elif self.move_state == MoveState.RIGHT:
+                 
+                if leftmost_x <= 0:
+                    self.move_direction = "right"
+                    for pixel in self.enemy_icon:
+                        pixel.pixelRect.y += 40
+
+            elif self.move_direction == "right":
+                for pixel in self.enemy_icon:
                     pixel.pixelRect.x += self.speed
-                    self.boundingBox.x += self.speed
 
-
-            if self.enemy_icon[4].pixelRect.x <= 0:
-                self.move_state = MoveState.RIGHT
-                for pixel in self.enemy_icon:
-                    pixel.pixelRect.y += 40
-                    self.boundingBox.y += 40
-            elif self.enemy_icon[4].pixelRect.x >= 600 - 21:
-                self.move_state = MoveState.LEFT
-                for pixel in self.enemy_icon:
-                    pixel.pixelRect.y += 40
-                    self.boundingBox.y += 40
-
+                if rightmost_x >= 600 - 21:
+                   self.move_direction = "left"
+                   for pixel in self.enemy_icon:
+                        pixel.pixelRect.y += 40
         else:
             for pixel in self.enemy_icon:
                 pixel.pixelRect.y += random.randrange(5, 10)
@@ -142,6 +132,5 @@ class Enemy(object):
             
 
     def draw(self):
-        if self.life_state == LifeState.ALIVE:
-            for pixel in self.enemy_icon:
-                pixel.draw()
+         for pixel in self.enemy_icon:
+            pixel.draw()

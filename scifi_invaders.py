@@ -7,6 +7,7 @@ import player_tank
 import bullet
 import building
 import enemy
+import threading
 
 
 pygame.init()
@@ -41,15 +42,11 @@ def get_waves():
 
     for slots in wave[0]:
         if slots == "1":
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 200, enemy_type = "taito_0"))
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 235, enemy_type = "taito_1"))
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 270, enemy_type = "taito_1"))
-            enemy_list.append(enemy.Enemy(WINDOW,startX, 305, enemy_type = "taito_2"))
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 340, enemy_type = "taito_2"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 85, enemy_type = "taito_0"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 85 * 2, enemy_type = "taito_1"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 85 * 3, enemy_type = "taito_2"))
 
             startX += skip_size
-
-
 
 
 
@@ -116,8 +113,10 @@ def main_game():
                 game_screen.kill_screen()
 
     
-        draw()
-        update()
+        thread = threading.Thread(target=draw())
+        thread.start()
+        update_thread = threading.Thread(target=update())
+        update_thread.start()
 
 
 if __name__ == '__main__':
