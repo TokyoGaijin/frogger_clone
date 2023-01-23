@@ -21,14 +21,27 @@ WINDOW = game_screen.WINDOW
 
 # Game Objects
 player = player_tank.Player(WINDOW, 300, 700)
-building_1 = building.Building(WINDOW, 25, 480)
-building_2 = building.Building(WINDOW, 200, 480)
-building_3 = building.Building(WINDOW, 375, 480)
-building_4 = building.Building(WINDOW, 525, 480)
+building_1 = building.Building(WINDOW, 25, 550)
+building_2 = building.Building(WINDOW, 200, 550)
+building_3 = building.Building(WINDOW, 375, 550)
+building_4 = building.Building(WINDOW, 525, 550)
 
 city = [building_1, building_2, building_3, building_4]
 
-test_enemy = enemy.Enemy(WINDOW, 30, 100)
+
+wave = ["1-1-1-1-1-1-1-1-1-1-1"]
+enemy_list = []
+
+def get_waves():
+    global enemy_list
+    skip_size = 45
+    startX = 30
+
+    for slots in wave[0]:
+        if slots == "1":
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 200, enemy_type = "taito_0"))
+
+            startX += skip_size
 
 
 
@@ -47,9 +60,9 @@ def update():
     player.update()
     for building in city:
         building.update()
-    collide_building()
-
-    test_enemy.update()
+    for enemy in enemy_list:
+        enemy.update()
+    collide_building()    
 
 
     
@@ -57,14 +70,18 @@ def draw():
     player.draw()
     for building in city:
         building.draw()
-    test_enemy.draw()
+    for enemy in enemy_list:
+        enemy.draw()
 
 
 def main_game():
     for building in city:
         building.build_building()
 
-    test_enemy.build_enemy()
+    get_waves()
+    for enemy in enemy_list:
+        enemy.build_enemy()
+    
 
     while game_screen.inPlay:
 

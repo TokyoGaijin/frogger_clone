@@ -25,6 +25,7 @@ class Enemy(object):
         self.ashes = cs.night_gray["pygame"]
         self.move_state = MoveState.LEFT
         self.speed = 1
+        self.clock = pygame.time.Clock()
 
         self.taito_0 = ["----1----",
                         "---111---",
@@ -108,16 +109,25 @@ class Enemy(object):
 
 
     def update(self):
+        time_passed = 60 / 1000.0
+
         for pixel in self.enemy_icon:
             if self.move_state == MoveState.LEFT:
                 pixel.pixelRect.x -= self.speed
             elif self.move_state == MoveState.RIGHT:
                 pixel.pixelRect.x += self.speed
 
+            pixel.pixelRect.y += self.speed * time_passed
+
         if self.enemy_icon[4].pixelRect.x <= 0:
             self.move_state = MoveState.RIGHT
         elif self.enemy_icon[4].pixelRect.x >= 600 - 21:
             self.move_state = MoveState.LEFT
+
+
+
+        
+
           
         
 
