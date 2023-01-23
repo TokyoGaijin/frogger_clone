@@ -30,6 +30,8 @@ city = [building_1, building_2, building_3, building_4]
 
 
 wave = ["1-1-1-1-1-1-1-1-1-1-1"]
+
+
 enemy_list = []
 
 def get_waves():
@@ -40,8 +42,14 @@ def get_waves():
     for slots in wave[0]:
         if slots == "1":
             enemy_list.append(enemy.Enemy(WINDOW, startX, 200, enemy_type = "taito_0"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 235, enemy_type = "taito_1"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 270, enemy_type = "taito_1"))
+            enemy_list.append(enemy.Enemy(WINDOW,startX, 305, enemy_type = "taito_2"))
+            enemy_list.append(enemy.Enemy(WINDOW, startX, 340, enemy_type = "taito_2"))
 
             startX += skip_size
+
+
 
 
 
@@ -55,6 +63,17 @@ def collide_building():
 
 
 
+def collide_enemy():
+    for enemy in enemy_list:
+        for pixel in enemy.enemy_icon:
+            for bullet in player.magazine:
+                if bullet.bulletRect.colliderect(pixel.pixelRect ):
+                    player.magazine.remove(bullet)
+                    enemy.isAlive = False
+
+
+
+
 def update():
     game_screen.screen_update()
     player.update()
@@ -63,6 +82,7 @@ def update():
     for enemy in enemy_list:
         enemy.update()
     collide_building()    
+    collide_enemy()
 
 
     
@@ -89,6 +109,7 @@ def main_game():
 
         if keyboard.is_pressed('escape'):
             game_screen.inPlay = False
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

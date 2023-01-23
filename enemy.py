@@ -2,6 +2,7 @@ import pygame
 import colorswatch as cs
 from enum import Enum
 import pixel
+import random
 
 
 class LifeState(Enum):
@@ -24,8 +25,13 @@ class Enemy(object):
         self.life_color = cs.white["pygame"]
         self.ashes = cs.night_gray["pygame"]
         self.move_state = MoveState.LEFT
-        self.speed = 1
+        self.speed = 2
         self.clock = pygame.time.Clock()
+        self.isAlive = True
+        if self.enemy_type == "taito_UFO":
+            self.boundingBox = pygame.Rect(self.posX, self.posY, 44,18)
+        else:
+            self.boundingBox = pygame.Rect(self.posX, self.posY, 27, 27)
 
         self.taito_0 = ["----1----",
                         "---111---",
@@ -65,15 +71,6 @@ class Enemy(object):
                           "-1111--1111--1111-",
                           "--11111111111111--",]
 
-        self.death_ashes = ["---------",
-                            "---------",
-                            "---------",
-                            "---------",
-                            "----1----",
-                            "---1111--",
-                            "-1111111-",
-                            "111111111",
-                            "111111111"]
 
         self.enemy_icon = []
         self.enemy_pattern = []
@@ -106,31 +103,41 @@ class Enemy(object):
             self.posY += pixel_width
             self.posX = self.startX
 
+            
+
+        
 
 
     def update(self):
-        for pixel in self.enemy_icon:
-            if self.move_state == MoveState.LEFT:
-                pixel.pixelRect.x -= self.speed
-            elif self.move_state == MoveState.RIGHT:
-                pixel.pixelRect.x += self.speed
-
-
-        if self.enemy_icon[4].pixelRect.x <= 0:
-            self.move_state = MoveState.RIGHT
+        if self.isAlive:
             for pixel in self.enemy_icon:
-                pixel.pixelRect.y += 35
-        elif self.enemy_icon[4].pixelRect.x >= 600 - 21:
-            self.move_state = MoveState.LEFT
+                if self.move_state == MoveState.LEFT:
+                    pixel.pixelRect.x -= self.speed
+                    self.boundingBox.x -= self.speed
+                elif self.move_state == MoveState.RIGHT:
+                    pixel.pixelRect.x += self.speed
+                    self.boundingBox.x += self.speed
+
+
+            if self.enemy_icon[4].pixelRect.x <= 0:
+                self.move_state = MoveState.RIGHT
+                for pixel in self.enemy_icon:
+                    pixel.pixelRect.y += 40
+                    self.boundingBox.y += 40
+            elif self.enemy_icon[-1].pixelRect.x >= 600:
+                self.move_state = MoveState.LEFT
+                for pixel in self.enemy_icon:
+                    pixel.pixelRect.y += 40
+                    self.boundingBox.y += 40
+
+        else:
             for pixel in self.enemy_icon:
-                pixel.pixelRect.y += 35 
+                pixel.pixelRect.y += random.randrange(5, 10)
 
+                if pixel.pixelRect.y >= 500:
+                    self.enemy_icon.remove(pixel)
 
-
-        
-
-          
-        
+            
 
             
 
