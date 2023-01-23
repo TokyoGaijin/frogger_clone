@@ -109,20 +109,21 @@ class Enemy(object):
 
 
     def update(self):
-        time_passed = 60 / 1000.0
-
         for pixel in self.enemy_icon:
             if self.move_state == MoveState.LEFT:
                 pixel.pixelRect.x -= self.speed
             elif self.move_state == MoveState.RIGHT:
                 pixel.pixelRect.x += self.speed
 
-            pixel.pixelRect.y += self.speed * time_passed
 
         if self.enemy_icon[4].pixelRect.x <= 0:
             self.move_state = MoveState.RIGHT
+            for pixel in self.enemy_icon:
+                pixel.pixelRect.y += 35
         elif self.enemy_icon[4].pixelRect.x >= 600 - 21:
             self.move_state = MoveState.LEFT
+            for pixel in self.enemy_icon:
+                pixel.pixelRect.y += 35 
 
 
 
