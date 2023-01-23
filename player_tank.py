@@ -2,6 +2,7 @@ import pygame
 import keyboard
 import colorswatch as cs
 import bullet
+import pixel
 
 
 class Player(object):
@@ -16,6 +17,11 @@ class Player(object):
         self.isAlive = True
         self.right_limit = 600 - self.player_rect.width
         self.magazine= []
+        self.player_pattern = [["----1----"],
+                               ["111111111"],
+                               ["111111111"]]
+        self.player_icon = []
+
 
          
         
@@ -24,6 +30,8 @@ class Player(object):
             self.magazine.append(bullet.Bullet(self.surface, self.player_gun.x, self.player_gun.y))
 
 
+    def build_player(self):
+        pass
 
     def update(self):
         # build the player:
