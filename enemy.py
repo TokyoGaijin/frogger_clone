@@ -124,7 +124,7 @@ class Enemy(object):
                 for pixel in self.enemy_icon:
                     pixel.pixelRect.y += 40
                     self.boundingBox.y += 40
-            elif self.enemy_icon[-1].pixelRect.x >= 600:
+            elif self.enemy_icon[4].pixelRect.x >= 600 - 21:
                 self.move_state = MoveState.LEFT
                 for pixel in self.enemy_icon:
                     pixel.pixelRect.y += 40
