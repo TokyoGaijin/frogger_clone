@@ -8,7 +8,7 @@ class Bullet(object):
         self.posY = posY
         self.color = cs.light_gray["pygame"]
         self.bulletRect = pygame.Rect(self.posX, self.posY, 5, 25)
-        self.speed = 5
+        self.speed = 8
         self.direction = direction
 
 

@@ -16,7 +16,7 @@ class Enemy(object):
         self.life_color = cs.white["pygame"]
         self.ashes = cs.night_gray["pygame"]
         self.move_direction = "left"
-        self.speed = 2
+        self.speed = 1
         self.clock = pygame.time.Clock()
         self.isAlive = True
         if self.enemy_type == "taito_UFO":

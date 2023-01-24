@@ -1,4 +1,3 @@
-#import pygame
 import enemy
 
 ## This class handles the enemy waves
@@ -11,6 +10,9 @@ class WaveManager(object):
         self.startX = 30
         self.enemy_list = []
         self.saucer_list = []
+        self.saucer_launch_timer = 0
+        self.saucer_launch_factor = 600
+        self.speed_factor = 2
         
 
 
@@ -26,6 +28,20 @@ class WaveManager(object):
         self.saucer_list.append(enemy.Enemy(self.surface, 850, 60, enemy_type = "taito_UFO"))
 
 
+    def level_up(self):
+        print(f"Enemies remaining: {len(self.enemy_list)}")
+        for enemy in self.enemy_list:
+            if len(self.enemy_list) <= 20:
+                enemy.speed = 2
+            if len(self.enemy_list) <= 10:
+                enemy.speed = 3
+            if len(self.enemy_list) <= 5:
+                enemy.speed = 4
+            if len(self.enemy_list) <= 2:
+                enemy.speed = 5
+
+
+
     def collide_with(self, target):
         for enemy in self.enemy_list:
             for pixel in enemy.enemy_icon:
@@ -34,20 +50,55 @@ class WaveManager(object):
                         target.remove(bullet)
                         enemy.isAlive = False
 
+            if len(enemy.enemy_icon) <= 0:
+                self.enemy_list.remove(enemy)
+
+
+        for UFO in self.saucer_list:
+            for pixel in UFO.enemy_icon:
+                for bullet in target:
+                    if bullet.bulletRect.colliderect(pixel.pixelRect):
+                        target.remove(bullet)
+                        enemy.isAlive = False
+
+        self.level_up()
+
+
+
 
     def build_enemies(self):
         for enemy in self.enemy_list:
             enemy.build_enemy()
 
+        for UFO in self.saucer_list:
+            UFO.build_enemy()
+
+
+
+
+
+
 
     def update(self):
+
+
+        self.saucer_launch_timer += 60
+
         for enemy in self.enemy_list:
             enemy.update()
+
+        if self.saucer_launch_timer % self.saucer_launch_factor == 0:
+            if len(self.saucer_list) < 1:
+                for UFO in self.saucer_list:
+                    UFO.update()
 
 
 
     def draw(self):
         for enemy in self.enemy_list:
             enemy.draw()
+
+        for UFO in self.saucer_list:
+            UFO.draw()
 
 
