@@ -67,11 +67,15 @@ class WaveManager(object):
         self.level_up()
 
 
-    def bullet_collide_with(self, target):
+    def bullet_collide_with(self, targetRect, target = None):
         for bullet in self.bullet_list:
-            if bullet.bulletRect.colliderect(target):
+            if bullet.bulletRect.colliderect(targetRect):
                 self.bullet_list.remove(bullet)
+                if target != None:
+                    target.die()
+                    
 
+        
 
 
     def fire(self, target):

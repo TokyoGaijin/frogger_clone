@@ -70,7 +70,6 @@ class Enemy(object):
 
 
     def build_enemy(self):
-        
         if self.isAlive:
             if self.enemy_type == "taito_0":
                 self.enemy_pattern = self.taito_0

@@ -64,7 +64,7 @@ def update():
  
     collide_building()    
     wave_manager.collide_with(player.magazine)
-    wave_manager.bullet_collide_with(player.player_rect)
+    wave_manager.bullet_collide_with(player.player_rect, player)
 
 
     
@@ -82,7 +82,6 @@ def main_game():
 
     wave_manager.get_waves()
     wave_manager.build_enemies()
-        
 
 
 

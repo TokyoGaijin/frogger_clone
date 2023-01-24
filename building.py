@@ -1,5 +1,4 @@
-﻿import pygame
-import colorswatch as cs
+﻿import colorswatch as cs
 import pixel
 
 class Building(object):
