@@ -2,7 +2,7 @@ import pygame
 import colorswatch as cs
 import pixel
 import random
-
+import bullet
 
 
 
@@ -66,6 +66,7 @@ class Enemy(object):
         self.enemy_icon = []
         self.enemy_pattern = []
         self.startX = self.posX
+        self.bullet_list = []
 
 
     def build_enemy(self):
@@ -96,31 +97,38 @@ class Enemy(object):
 
             
 
-        
+    def fire(self):
+        if len(self.bullet_list) < 1:
+            self.bullet_list.append(bullet.Bullet(self.surface, self.posX, self.posY, direction = "down"))
+
 
 
     def update(self):
         if self.isAlive:
-            leftmost_x = min([pixel.pixelRect.x for pixel in self.enemy_icon])
-            rightmost_x = max([pixel.pixelRect.x for pixel in self.enemy_icon])
-
-            if self.move_direction == "left":
+            if self.enemy_type == "taito_UFO":
                 for pixel in self.enemy_icon:
                     pixel.pixelRect.x -= self.speed
-                 
-                if leftmost_x <= 0:
-                    self.move_direction = "right"
+            else:
+                leftmost_x = min([pixel.pixelRect.x for pixel in self.enemy_icon])
+                rightmost_x = max([pixel.pixelRect.x for pixel in self.enemy_icon])
+
+                if self.move_direction == "left":
                     for pixel in self.enemy_icon:
-                        pixel.pixelRect.y += 40
+                        pixel.pixelRect.x -= self.speed
+                 
+                    if leftmost_x <= 0:
+                        self.move_direction = "right"
+                        for pixel in self.enemy_icon:
+                            pixel.pixelRect.y += 40
 
-            elif self.move_direction == "right":
-                for pixel in self.enemy_icon:
-                    pixel.pixelRect.x += self.speed
+                elif self.move_direction == "right":
+                    for pixel in self.enemy_icon:
+                        pixel.pixelRect.x += self.speed
 
-                if rightmost_x >= 600 - 21:
-                   self.move_direction = "left"
-                   for pixel in self.enemy_icon:
-                        pixel.pixelRect.y += 40
+                    if rightmost_x >= 600 - 21:
+                       self.move_direction = "left"
+                       for pixel in self.enemy_icon:
+                            pixel.pixelRect.y += 40
         else:
             for pixel in self.enemy_icon:
                 pixel.pixelRect.y += random.randrange(5, 10)

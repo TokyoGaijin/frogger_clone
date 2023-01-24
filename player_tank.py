@@ -17,19 +17,11 @@ class Player(object):
         self.right_limit = 600 - self.player_rect.width
         self.magazine= []
         self.isAlive = True
-        self.player_pattern = [["----1----"],
-                               ["111111111"],
-                               ["111111111"]]
-        self.player_icon = []
-
-
          
         
     def fire(self):
         if len(self.magazine) < 1:
             self.magazine.append(bullet.Bullet(self.surface, self.player_gun.x, self.player_gun.y))
-
-
 
 
 

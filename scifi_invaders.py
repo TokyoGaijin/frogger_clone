@@ -7,6 +7,7 @@ import player_tank
 import bullet
 import building
 import enemy
+import enemy_manager
 import threading
 
 
@@ -30,23 +31,11 @@ building_4 = building.Building(WINDOW, 525, 550)
 city = [building_1, building_2, building_3, building_4]
 
 
-wave = ["1-1-1-1-1-1-1-1-1-1-1"]
+
+# Game element managers
+wave_manager = enemy_manager.WaveManager(WINDOW)
 
 
-enemy_list = []
-
-def get_waves():
-    global enemy_list
-    skip_size = 45
-    startX = 30
-
-    for slots in wave[0]:
-        if slots == "1":
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 85, enemy_type = "taito_0"))
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 85 * 2, enemy_type = "taito_1"))
-            enemy_list.append(enemy.Enemy(WINDOW, startX, 85 * 3, enemy_type = "taito_2"))
-
-            startX += skip_size
 
 
 
@@ -60,44 +49,32 @@ def collide_building():
 
 
 
-def collide_enemy():
-    for enemy in enemy_list:
-        for pixel in enemy.enemy_icon:
-            for bullet in player.magazine:
-                if bullet.bulletRect.colliderect(pixel.pixelRect ):
-                    player.magazine.remove(bullet)
-                    enemy.isAlive = False
-
-
-
-
 def update():
     game_screen.screen_update()
     player.update()
+    wave_manager.update()
     for building in city:
         building.update()
-    for enemy in enemy_list:
-        enemy.update()
+ 
     collide_building()    
-    collide_enemy()
+    wave_manager.collide_with(player.magazine)
 
 
     
 def draw():
     player.draw()
+    wave_manager.draw()
     for building in city:
         building.draw()
-    for enemy in enemy_list:
-        enemy.draw()
+    
 
 
 def main_game():
     for building in city:
         building.build_building()
 
-    get_waves()
-    for enemy in enemy_list:
-        enemy.build_enemy()
+    wave_manager.get_waves()
+    wave_manager.build_enemies()
         
 
 
