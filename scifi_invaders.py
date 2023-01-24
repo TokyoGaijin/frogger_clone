@@ -47,6 +47,12 @@ def collide_building():
                     player.magazine.remove(bullet)
                     buildings.main_building.remove(pixels)
 
+            for bullet in wave_manager.bullet_list:
+                if bullet.bulletRect.colliderect(pixels.pixelRect):
+                    wave_manager.bullet_list.remove(bullet)
+                    buildings.main_building.remove(pixels)
+
+
 
 
 def update():
@@ -58,6 +64,7 @@ def update():
  
     collide_building()    
     wave_manager.collide_with(player.magazine)
+    wave_manager.bullet_collide_with(player.player_rect)
 
 
     
@@ -81,7 +88,8 @@ def main_game():
 
     while game_screen.inPlay:
 
-    
+        if len(wave_manager.bullet_list) < 1:
+            wave_manager.fire(player)
 
         if keyboard.is_pressed('escape'):
             game_screen.inPlay = False

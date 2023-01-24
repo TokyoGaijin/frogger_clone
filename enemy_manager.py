@@ -1,4 +1,6 @@
 import enemy
+import bullet as bt
+
 
 ## This class handles the enemy waves
 
@@ -13,6 +15,7 @@ class WaveManager(object):
         self.saucer_launch_timer = 0
         self.saucer_launch_factor = 600
         self.speed_factor = 2
+        self.bullet_list = []
         
 
 
@@ -28,8 +31,8 @@ class WaveManager(object):
         self.saucer_list.append(enemy.Enemy(self.surface, 850, 60, enemy_type = "taito_UFO"))
 
 
+
     def level_up(self):
-        print(f"Enemies remaining: {len(self.enemy_list)}")
         for enemy in self.enemy_list:
             if len(self.enemy_list) <= 20:
                 enemy.speed = 2
@@ -64,6 +67,23 @@ class WaveManager(object):
         self.level_up()
 
 
+    def bullet_collide_with(self, target):
+        for bullet in self.bullet_list:
+            if bullet.bulletRect.colliderect(target):
+                self.bullet_list.remove(bullet)
+
+
+
+    def fire(self, target):
+        for enemy in self.enemy_list:
+            for pixel in enemy.enemy_icon:
+                if pixel.pixelRect.x == target.posX:
+                    if len(self.bullet_list) <= 2:
+                        self.bullet_list.append(bt.Bullet(self.surface, pixel.pixelRect.x, pixel.pixelRect.y, direction = "down"))
+
+
+        
+
 
 
     def build_enemies(self):
@@ -81,7 +101,6 @@ class WaveManager(object):
 
     def update(self):
 
-
         self.saucer_launch_timer += 60
 
         for enemy in self.enemy_list:
@@ -92,6 +111,13 @@ class WaveManager(object):
                 for UFO in self.saucer_list:
                     UFO.update()
 
+        for bullet in self.bullet_list:
+            bullet.update()
+
+        for bullet in self.bullet_list:
+            if bullet.bulletRect.y >= 900:
+                self.bullet_list.remove(bullet)
+
 
 
     def draw(self):
@@ -100,5 +126,8 @@ class WaveManager(object):
 
         for UFO in self.saucer_list:
             UFO.draw()
+
+        for bullet in self.bullet_list:
+            bullet.draw()
 
 

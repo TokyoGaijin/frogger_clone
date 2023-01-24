@@ -136,6 +136,8 @@ class Enemy(object):
                 if pixel.pixelRect.y >= self.posY - 100:
                     self.enemy_icon.remove(pixel)
 
+
+
             
 
             

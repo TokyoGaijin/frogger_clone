@@ -54,6 +54,8 @@ class Player(object):
         if self.player_rect.x >= self.right_limit:
             self.player_rect.x = self.right_limit
             self.player_gun.x = self.player_rect.x + 23
+
+        self.posX = self.player_rect.x
         
        
 

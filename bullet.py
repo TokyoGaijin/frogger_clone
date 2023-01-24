@@ -20,6 +20,7 @@ class Bullet(object):
             self.bulletRect.y -= self.speed
 
 
+
     def draw(self):
         # On create
         pygame.draw.rect(self.surface, self.color, self.bulletRect)
