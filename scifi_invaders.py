@@ -98,7 +98,9 @@ def main_game():
     get_waves()
     for enemy in enemy_list:
         enemy.build_enemy()
-    
+        
+
+
 
     while game_screen.inPlay:
 

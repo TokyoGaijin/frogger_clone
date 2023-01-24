@@ -6,6 +6,7 @@ import random
 
 
 
+
 class Enemy(object):
     def __init__(self, surface, posX, posY, enemy_type = "taito_0"):
         self.surface = surface
@@ -124,7 +125,7 @@ class Enemy(object):
             for pixel in self.enemy_icon:
                 pixel.pixelRect.y += random.randrange(5, 10)
 
-                if pixel.pixelRect.y >= 500:
+                if pixel.pixelRect.y >= self.posY - 100:
                     self.enemy_icon.remove(pixel)
 
             
