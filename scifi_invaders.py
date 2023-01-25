@@ -9,7 +9,9 @@ import building
 import enemy
 import enemy_manager
 import threading
+import game_manager
 import lifeIcon
+
 
 
 pygame.init()
@@ -38,20 +40,26 @@ wave_manager = enemy_manager.WaveManager(WINDOW)
 
 
 # GUI Objects
+GM = game_manager.GameManager(WINDOW)
 life_list = [lifeIcon.LifeIcon(WINDOW) for i in range(0,3)]
+
+
 
 def collide_building():
     for buildings in city:
         for pixels in buildings.main_building:
+            removed = False
             for bullet in player.magazine:
-                if bullet.bulletRect.colliderect(pixels.pixelRect):
+                if bullet.bulletRect.colliderect(pixels.pixelRect) and not removed:
                     player.magazine.remove(bullet)
                     buildings.main_building.remove(pixels)
+                    removed = True
 
-            for bullet in wave_manager.bullet_list:
-                if bullet.bulletRect.colliderect(pixels.pixelRect):
+            for bullet in wave_manager.bullet_list[:]:
+                if bullet.bulletRect.colliderect(pixels.pixelRect) and not removed:
                     wave_manager.bullet_list.remove(bullet)
                     buildings.main_building.remove(pixels)
+                    removed = True
 
 
 
@@ -62,18 +70,20 @@ def update():
     wave_manager.update()
     for building in city:
         building.update()
+
+
  
     collide_building()    
     wave_manager.collide_with(player.magazine)
     wave_manager.bullet_collide_with(player.player_rect, player)
 
+    
 
     
 def draw():
     # GUI element drawing
-    life_list[0].draw(600 - (70 * 4), 30)
-    life_list[1].draw(600 - (70 * 3), 30)
-    life_list[2].draw(600 - (70 * 2), 30)
+    GM.draw()
+
 
     # Game element drawing
     player.draw()

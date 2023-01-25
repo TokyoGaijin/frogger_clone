@@ -1,5 +1,6 @@
 import enemy
 import bullet as bt
+import game_manager
 
 
 ## This class handles the enemy waves
@@ -16,6 +17,7 @@ class WaveManager(object):
         self.saucer_launch_factor = 600
         self.speed_factor = 2
         self.bullet_list = []
+        self.level = 0
         
 
 
@@ -36,12 +38,16 @@ class WaveManager(object):
         for enemy in self.enemy_list:
             if len(self.enemy_list) <= 20:
                 enemy.speed = 2
+                # Point value for each kill remains the same
             if len(self.enemy_list) <= 10:
                 enemy.speed = 3
+                game_manager.level_up(1)
             if len(self.enemy_list) <= 5:
                 enemy.speed = 4
+                game_manager.level_up(2)
             if len(self.enemy_list) <= 2:
-                enemy.speed = 5
+                enemy.speed = 5 
+                game_manager.level_up(3)
 
 
 
