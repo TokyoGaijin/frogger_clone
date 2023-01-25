@@ -72,6 +72,8 @@ class WaveManager(object):
             if bullet.bulletRect.colliderect(targetRect):
                 self.bullet_list.remove(bullet)
                 if target != None:
+                    for enemy in self.enemy_list:
+                        enemy.isGunEnabled = False
                     target.die()
                     
 
@@ -80,10 +82,11 @@ class WaveManager(object):
 
     def fire(self, target):
         for enemy in self.enemy_list:
-            for pixel in enemy.enemy_icon:
-                if pixel.pixelRect.x == target.posX:
-                    if len(self.bullet_list) <= 2:
-                        self.bullet_list.append(bt.Bullet(self.surface, pixel.pixelRect.x, pixel.pixelRect.y, direction = "down"))
+            if enemy.isGunEnabled:
+                for pixel in enemy.enemy_icon:
+                    if pixel.pixelRect.x == target.posX:
+                        if len(self.bullet_list) <= 2:
+                            self.bullet_list.append(bt.Bullet(self.surface, pixel.pixelRect.x, pixel.pixelRect.y, direction = "down"))
 
 
         

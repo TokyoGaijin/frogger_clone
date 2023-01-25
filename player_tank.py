@@ -1,8 +1,9 @@
 import pygame
 import keyboard
 import colorswatch as cs
+import pixel
 import bullet
-import explosion
+import random
 
 class Player(object):
     def __init__(self, surface, posX, posY):
@@ -10,6 +11,7 @@ class Player(object):
         self.posX = posX
         self.posY = posY
         self.speed = 5
+        self.pixel_width = 5
         self.color = cs.green["pygame"]
         self.death_color = cs.fuchsia["pygame"]
         self.player_rect = pygame.Rect(self.posX, self.posY, 50, 20)
@@ -18,7 +20,27 @@ class Player(object):
         self.right_limit = 600 - self.player_rect.width
         self.magazine= []
         self.isAlive = True
-        self.bomb = explosion.Explosion(self.surface)
+        
+        self.block = [["----11----"],
+                      ["----11----"],
+                      ["1111111111"],
+                      ["1111111111"]]
+
+        self.bomb = []
+
+
+    def build_bomb(self):
+        startX = self.posX
+
+        for row in self.block:
+            for col in row:
+                if col == "1":
+                    self.bomb.append(pixel.Pixel(self.surface, self.posX, self.posY, pixel_size = self.pixel_width))
+                
+                self.posX += self.pixel_width
+
+            self.posY += self.pixel_width
+            self.posX = startX
 
 
 
@@ -28,46 +50,54 @@ class Player(object):
             self.magazine.append(bullet.Bullet(self.surface, self.player_gun.x, self.player_gun.y))
 
 
+
     def die(self):
         self.isAlive = False
-        explosion.Explosion.build_bomb(self.posX, self.posY)
-        #self.bomb.build_bomb(self.posX, self.posY)
+        self.build_bomb()
+
+
 
 
     def update(self):
-
-        def move(direction):
-            if direction == "left":
-                self.player_rect.x -= self.speed
-                self.player_gun.x -= self.speed
-            if direction == "right":
-                self.player_rect.x += self.speed
-                self.player_gun.x += self.speed
-
-
         if self.isAlive:
+            print(f"Player position x: {self.posX} y: {self.posY}")
+            def move(direction):
+                if direction == "left":
+                    self.player_rect.x -= self.speed
+                    self.player_gun.x -= self.speed
+                if direction == "right":
+                    self.player_rect.x += self.speed
+                    self.player_gun.x += self.speed
+
+
+            
             if keyboard.is_pressed('left_arrow') or keyboard.is_pressed('a'):
                 move("left")
             if keyboard.is_pressed('right_arrow') or keyboard.is_pressed('d'):
                 move("right")
             if keyboard.is_pressed('space'):
                 self.fire()
-        else:
-            #self.bomb.update(self.posX, self.posY)
-            explosion.Explosion.update(self.posX, self.posY)
-
-
-
-        # boundary check
-        if self.player_rect.x <= 0:
-            self.player_rect.x = 0
-            self.player_gun.x = self.player_rect.x + 23
-        if self.player_rect.x >= self.right_limit:
-            self.player_rect.x = self.right_limit
-            self.player_gun.x = self.player_rect.x + 23
-
-        self.posX = self.player_rect.x
         
+            
+
+
+            # boundary check
+            if self.player_rect.x <= 0:
+                self.player_rect.x = 0
+                self.player_gun.x = self.player_rect.x + 23
+            if self.player_rect.x >= self.right_limit:
+                self.player_rect.x = self.right_limit
+                self.player_gun.x = self.player_rect.x + 23
+
+            self.posX = self.player_rect.x
+
+        else:
+            print(f"Died at x: {self.posX} y: {self.posY} Frags: {len(self.bomb)}") 
+            for pixels in self.bomb:
+                pixels.pixelRect.y += random.randrange(3, 11)
+
+                if pixels.pixelRect.y >= self.posY + 50:
+                    self.bomb.remove(pixels)
        
 
 
@@ -77,9 +107,8 @@ class Player(object):
             if bullet.bulletRect.y + bullet.bulletRect.height <= 100:
                 self.magazine.remove(bullet)
 
+
         
-
-
 
 
     def draw(self):
@@ -90,5 +119,6 @@ class Player(object):
             pygame.draw.rect(self.surface, self.color, self.player_rect)
             pygame.draw.rect(self.surface, self.color, self.player_gun)
         else:
-            self.bomb.draw()
+            for pixels in self.bomb:
+                pixels.draw()
 

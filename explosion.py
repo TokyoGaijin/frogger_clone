@@ -6,25 +6,30 @@ class Explosion(object):
     def __init__(self, surface, color = cs.fuchsia["pygame"]):
         self.surface = surface
         self.color = color
-        self.block = [["1111111111"],
+        self.block = [["----11----"],
+                      ["----11----"],
                       ["1111111111"],
                       ["1111111111"]]
         self.skip_size = 5
         self.bomb = []
+
+        
 
 
     def build_bomb(self, posX, posY):
         for row in self.block:
             for col in row:
                 if col == "1":
-                    self.bomb.append(pixel.Pixel(self.surface, posX, posY))
+                    self.bomb.append(pixel.Pixel(self.surface, posX, posY, pixel_size = self.skip_size))
 
                 posX += self.skip_size
+
             posY += self.skip_size
             posX = 0
 
 
-    def update(self, posX, posY):
+
+    def update(self, posY):
         print(f"Frags: {len(self.bomb)}")
         for pixel in self.bomb:
             pixel.pixelRect.y += random.randrange(3, 11)

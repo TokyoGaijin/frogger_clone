@@ -9,6 +9,7 @@ import building
 import enemy
 import enemy_manager
 import threading
+import lifeIcon
 
 
 pygame.init()
@@ -36,8 +37,8 @@ city = [building_1, building_2, building_3, building_4]
 wave_manager = enemy_manager.WaveManager(WINDOW)
 
 
-
-
+# GUI Objects
+life_list = [lifeIcon.LifeIcon(WINDOW) for i in range(0,3)]
 
 def collide_building():
     for buildings in city:
@@ -69,6 +70,12 @@ def update():
 
     
 def draw():
+    # GUI element drawing
+    life_list[0].draw(600 - (70 * 4), 30)
+    life_list[1].draw(600 - (70 * 3), 30)
+    life_list[2].draw(600 - (70 * 2), 30)
+
+    # Game element drawing
     player.draw()
     wave_manager.draw()
     for building in city:

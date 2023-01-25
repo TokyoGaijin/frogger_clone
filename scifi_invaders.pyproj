@@ -28,6 +28,7 @@
     <Compile Include="enemy_manager.py" />
     <Compile Include="explosion.py" />
     <Compile Include="frog.py" />
+    <Compile Include="lifeIcon.py" />
     <Compile Include="pixel.py" />
     <Compile Include="player_tank.py" />
     <Compile Include="scifi_invaders.py" />

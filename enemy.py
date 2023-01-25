@@ -23,6 +23,7 @@ class Enemy(object):
             self.boundingBox = pygame.Rect(self.posX, self.posY, 44,18)
         else:
             self.boundingBox = pygame.Rect(self.posX, self.posY, 27, 27)
+        self.isGunEnabled = True
 
         self.taito_0 = ["----1----",
                         "---111---",
