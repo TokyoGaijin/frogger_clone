@@ -2,13 +2,13 @@ import pygame
 import colorswatch as cs
 
 class Bullet(object):
-    def __init__(self, surface, posX, posY, direction = "up"):
+    def __init__(self, surface, posX, posY, direction = "up", speed = 8):
         self.surface = surface
         self.posX = posX
         self.posY = posY
         self.color = cs.light_gray["pygame"]
         self.bulletRect = pygame.Rect(self.posX, self.posY, 5, 25)
-        self.speed = 8
+        self.speed = speed
         self.direction = direction
 
 

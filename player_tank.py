@@ -18,7 +18,7 @@ class Player(object):
         self.player_gun = pygame.Rect(self.player_rect.x + 23, self.player_rect.y - 20, 5, 20)
         self.isAlive = True
         self.right_limit = 600 - self.player_rect.width
-        self.magazine= []
+        self.magazine = []
         self.isAlive = True
         
         self.block = [["----11----"],

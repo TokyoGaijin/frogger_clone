@@ -92,7 +92,7 @@ class WaveManager(object):
                 for pixel in enemy.enemy_icon:
                     if pixel.pixelRect.x == target.posX:
                         if len(self.bullet_list) <= 2:
-                            self.bullet_list.append(bt.Bullet(self.surface, pixel.pixelRect.x, pixel.pixelRect.y, direction = "down"))
+                            self.bullet_list.append(bt.Bullet(self.surface, pixel.pixelRect.x, pixel.pixelRect.y, direction = "down", speed = 3))
 
 
         
